@@ -60,7 +60,17 @@ def update_sales_worksheet(sales_data):
     sales_wksht.append_row(sales_data)
     
     print("Sales figures added to worksheet successfully!\n")
+   
+def update_surplus_worksheet(surplus_data):
+    """
+    Add the calculated surplus into the surplus worksheet
+    """
+    print("Updating surplus worksheet...")
     
+    surplus_wksht = SHEET.worksheet("surplus")
+    surplus_wksht.append_row(surplus_data)
+    print("Surplus worksheet updated successfully!")
+     
 def calculate_surplus(sales_data):
     """Calculate the difference between the stock and the sales"""
     print("Getting stock...")
@@ -68,7 +78,7 @@ def calculate_surplus(sales_data):
     stock_row = stock[-1]
     
     surplus = [int(stock_items) - sales_items for stock_items, sales_items in zip(stock_row, sales_data)]
-    print(surplus)
+    return surplus
     
 def main():
     """
@@ -79,7 +89,8 @@ def main():
     sales_data = [int(data) for data in sales_data_str]
 
     update_sales_worksheet(sales_data)
-    calculate_surplus(sales_data)
+    surplus = calculate_surplus(sales_data)
+    update_surplus_worksheet(surplus)
     
 welcome_message = "Welcome to Love Sandwich's sales data automation system\n"
 for i in range(len(welcome_message)):
