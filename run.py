@@ -49,27 +49,16 @@ def validate_sales_data(values):
         return False
         
     return True
-        
-def update_sales_worksheet(sales_data):
+     
+def update_worksheet(data, worksheet):
     """
-    Add inputted sales figure as a new row in sales worksheet.
+    Add the data given into a new row of the specified worksheet
     """
-    print("Updating sales worksheet...\n")
+    print(f"Updating {worksheet} worksheet...")
     
-    sales_wksht = SHEET.worksheet("sales")
-    sales_wksht.append_row(sales_data)
-    
-    print("Sales figures added to worksheet successfully!\n")
-   
-def update_surplus_worksheet(surplus_data):
-    """
-    Add the calculated surplus into the surplus worksheet
-    """
-    print("Updating surplus worksheet...")
-    
-    surplus_wksht = SHEET.worksheet("surplus")
-    surplus_wksht.append_row(surplus_data)
-    print("Surplus worksheet updated successfully!")
+    wksht = SHEET.worksheet(worksheet)
+    wksht.append_row(data)
+    print(f"{worksheet.capitalize()} worksheet updated successfully!")
      
 def calculate_surplus(sales_data):
     """Calculate the difference between the stock and the sales"""
@@ -88,9 +77,9 @@ def main():
 
     sales_data = [int(data) for data in sales_data_str]
 
-    update_sales_worksheet(sales_data)
+    update_worksheet(sales_data, "sales")
     surplus = calculate_surplus(sales_data)
-    update_surplus_worksheet(surplus)
+    update_worksheet(surplus, "surplus")
     
 welcome_message = "Welcome to Love Sandwich's sales data automation system\n"
 for i in range(len(welcome_message)):
