@@ -29,9 +29,7 @@ def get_sales_data():
         sales_data = figures_str.split(",")
         if validate_sales_data(sales_data):
             print("[Data is valid]\n")
-            break
-        
-        return sales_data
+            return sales_data
     
 def validate_sales_data(values):
     """ 
@@ -51,5 +49,19 @@ def validate_sales_data(values):
         
     return True
         
+def update_sales_worksheet(sales_data):
+    """
+    Add inputted sales figure as a new row in sales worksheet.
+    """
+    print("Updating sales worksheet...\n")
+    
+    sales_wksht = SHEET.worksheet("sales")
+    sales_wksht.append_row(sales_data)
+    
+    print("Sales figures added to worksheet successfully!\n")
+    
+sales_data_str = get_sales_data()
 
-sales_data = get_sales_data()
+sales_data = [int(data) for data in sales_data_str]
+
+update_sales_worksheet(sales_data)
