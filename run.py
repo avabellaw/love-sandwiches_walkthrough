@@ -60,8 +60,20 @@ def update_sales_worksheet(sales_data):
     
     print("Sales figures added to worksheet successfully!\n")
     
-sales_data_str = get_sales_data()
+def main():
+    """
+    Runs the programs functions
+    """
+    sales_data_str = get_sales_data()
 
-sales_data = [int(data) for data in sales_data_str]
+    sales_data = [int(data) for data in sales_data_str]
 
-update_sales_worksheet(sales_data)
+    update_sales_worksheet(sales_data)
+    
+welcome_message = "Welcome to Love Sandwich's sales data automation system\n"
+for i in range(len(welcome_message)):
+    welcome_message += "-"
+    
+print(welcome_message)
+    
+main()
