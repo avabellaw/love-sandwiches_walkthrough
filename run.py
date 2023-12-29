@@ -69,20 +69,34 @@ def calculate_surplus(sales_data):
     surplus = [int(stock_items) - sales_items for stock_items, sales_items in zip(stock_row, sales_data)]
     return surplus
     
-def get_last_5_entries(worksheet):
+def get_last_5_sales():
     """
     Retrieves the last 5 entires for each column 
     in the worksheet specified
     """    
-    worksheet = SHEET.worksheet(worksheet)
+    worksheet = SHEET.worksheet("sales")
     
     columns = []
     for i in range(1, 7):
         column = worksheet.col_values(i)
         columns.append(column[-5:])
+        columns[-1] = [int(entry) for entry in columns[-1]]
     
     return columns
 
+def calculate_stock_data():
+    """
+    Calculate the average stock for the last 5 entries and
+    add 10%
+    """
+    print("Calculating average stock...")
+    data = get_last_5_sales()
+    new_stock_data = []
+    for column in data:
+        average = sum(column) / len(column)
+        new_stock_data.append(round(average * 1.1))
+    return new_stock_data
+    
 def main():
     """
     Runs the programs functions
@@ -92,8 +106,15 @@ def main():
     sales_data = [int(data) for data in sales_data_str]
 
     update_worksheet(sales_data, "sales")
+    print()
     surplus = calculate_surplus(sales_data)
     update_worksheet(surplus, "surplus")
+    print()
+    
+    new_stock_row = calculate_stock_data()
+    print()
+    update_worksheet(new_stock_row, "stock")
+
     
 welcome_message = "Welcome to Love Sandwich's sales data automation system\n"
 for i in range(len(welcome_message)):
@@ -101,5 +122,4 @@ for i in range(len(welcome_message)):
     
 print(welcome_message)
     
-#main()
-last_5_sales = get_last_5_entries("sales")
+main()
