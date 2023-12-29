@@ -24,5 +24,23 @@ def get_sales_data():
     
     figures_str = input("Enter the figures:")
     print(f"Figures received: {figures_str}")
+    
+    sales_data = figures_str.split(",")
+    validate_sales_data(sales_data)
+    
+def validate_sales_data(values):
+    """ 
+    Checks list of values can be converted to integers, within a try,
+    and that the number of values is 6
+    """
+    
+    try:
+        if(len(values) != 6):
+            raise ValueError(
+                f"Exactly 6 sales figures are required, you provided: {len(values)}"
+                )a
+    except ValueError as e:
+        print(f"Invalid data: {e}, please try again.")
+        
 
 get_sales_data()
